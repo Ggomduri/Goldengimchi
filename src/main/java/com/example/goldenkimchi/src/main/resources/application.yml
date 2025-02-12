@@ -1,0 +1,25 @@
+# spring.application.name=goldenkimchi
+# Spring Data Source ?? - MySQL DB?? ?? ??
+spring:
+  application:
+    name: goldenkimchi
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/examplesdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
+    username: clion
+    password: u1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 772457861550-j02qq383dsf09oesn3ggnhkh5s4sn0g7.apps.googleusercontent.com
+            client-secret: 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
+            scope: profile, email

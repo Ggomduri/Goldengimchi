@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html lang="KR">
+<head>
+    <meta charset="utf-8">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <title>황금김치 Golden Kimchi</title>
+    <script>
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', function () {
+                let coin = this.getAttribute('data-coin');
+                fetch('/api/favorites/' + coin, { method: 'POST' })
+                    .then(() => this.innerText = this.innerText === '☆' ? '★' : '☆');
+            });
+        });
+    </script>
+    <script>
+        function fetchCryptoPrices() {
+            fetch("/api/prices")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('btc-price').innerText = data.BTCUSDT + " USD";
+                    document.getElementById('eth-price').innerText = data.ETHUSDT + " USD";
+                    document.getElementById('sol-price').innerText = data.SOLUSDT + " USD";
+                    document.getElementById('doge-price').innerText = data.DOGEUSDT + " USD";
+                })
+                .catch(error => console.error("Error fetching prices:", error));
+        }
+
+        setInterval(fetchCryptoPrices, 5000); // Update every 5 seconds
+        window.onload = fetchCryptoPrices;
+
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+    </script>
+    <button onclick="showFavorites()">My Favorite Coins</button>
+
+
+</head>
+<body>
+<h1>GOLDEN KIMCHI</h1>
+<!-- Navigation Tabs -->
+<div>
+    <button onclick="navigateTo('/')" class="tab">Home</button>
+    <button onclick="navigateTo('/news')" class="tab">News</button>
+    <button onclick="navigateTo('/news')" class="tab">Inflation</button>
+    <!-- You can add more tabs here -->
+</div>
+<div>
+    <a href="/oauth2/authorization/google">Login with Google</a>
+    <a href="/logout">Logout</a>
+</div>
+
+
+<div id="auth-section">
+    <a href="/oauth2/authorization/google">Login with Google</a>
+</div>
+
+<button id="favorite-coins-btn">My Favorite Coins</button>
+
+<div id="crypto-prices">
+    <!-- Example coins (Replace with dynamic rendering in real app) -->
+    <div class="coin-row">
+        <span>Bitcoin</span>
+        <span class="price" id="btc-price">$--</span>
+        <span class="star" data-coin="bitcoin">⭐</span>
+    </div>
+    <div class="coin-row">
+        <span>Ethereum</span>
+        <span class="price" id="eth-price">$--</span>
+        <span class="star" data-coin="ethereum">⭐</span>
+    </div>
+</div>
+
+<script>
+    // Check login status
+    let userLoggedIn = false;
+
+    fetch("/api/user")
+        .then(response => response.json())
+        .then(user => {
+            if (user.authenticated) {
+                userLoggedIn = true;
+                document.getElementById("auth-section").innerHTML = `
+                    <p>Welcome, ${user.email}!</p>
+                    <a href="/logout">Logout</a>
+                `;
+            }
+        });
+
+    // Handle favorite coin clicks
+    document.querySelectorAll(".star").forEach(star => {
+        star.addEventListener("click", function() {
+            if (!userLoggedIn) {
+                window.location.href = "/oauth2/authorization/google"; // Redirect to login
+                return;
+            }
+            const coin = this.dataset.coin;
+            fetch(`/api/favorites/${coin}`, { method: "POST" })
+                .then(() => this.classList.toggle("favorite"));
+        });
+    });
+
+    // Handle "My Favorite Coins" button click
+    document.getElementById("favorite-coins-btn").addEventListener("click", function() {
+        if (!userLoggedIn) {
+            window.location.href = "/oauth2/authorization/google"; // Redirect to login
+            return;
+        }
+        window.location.href = "/favorites"; // Redirect to favorites page
+    });
+</script>
+<table border="1">
+    <tr>
+        <th>Coin</th>
+        <th>Price (USD)</th>
+    </tr>
+    <tr>
+        <td>Bitcoin (BTC)</td>
+        <td id="btc-price">Loading...</td>
+    </tr>
+    <tr>
+        <td>Ethereum (ETH)</td>
+        <td id="eth-price">Loading...</td>
+    </tr>
+    <tr>
+        <td>Solana (SOL)</td>
+        <td id="sol-price">Loading...</td>
+    </tr>
+    <tr>
+        <td>Dogecoin (DOGE)</td>
+        <td id="doge-price">Loading...</td>
+    </tr>
+</table>
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>자산 목록</h2>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='addForm.html'" type="button">즐겨찾는 자산 등록
+            </button>
+        </div>
+    </div>
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>자산명</th>
+                <th>가격</th>
+                <th>시가총액</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><a href="item.html">1</a></td>
+                <td><a href="item.html">BTCUSDT</a></td>
+                <td>10000</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td><a href="item.html">2</a></td>
+                <td><a href="item.html">ETHUSDT</a></td>
+                <td>20000</td>
+                <td>20</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>
