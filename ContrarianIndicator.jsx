@@ -1,54 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from "react";
 
-const ContrarianIndicator = () => {
-  const [data, setData] = useState({ bullish: {}, bearish: {} });
-  const [loading, setLoading] = useState(true);
+function ContrarianIndicator() {
+    return (
+        <div className="flex flex-col min-h-screen bg-gray-100 items-center justify-center">
+            <h2 className="text-2xl font-bold mb-4 text-center">Bitcoin Google Search Trends</h2>
 
-  useEffect(() => {
-    const fetchIndicators = async () => {
-      try {
-        const response = await axios.get('/api/contrarian-indicator');
-        setData(response.data);
-      } catch (error) {
-        console.error("Error fetching contrarian indicators:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchIndicators();
-  }, []);
-
-  if (loading) {
-    return <div>Loading contrarian indicators...</div>;
-  }
-
-  return (
-    <div className="container mx-auto py-8">
-      <h2 className="text-3xl font-bold mb-6">Contrarian Indicators</h2>
-      <div className="mb-8">
-        <h3 className="text-2xl font-semibold">Bullish Mentions</h3>
-        <ul className="list-disc pl-5">
-          {Object.entries(data.bullish).map(([keyword, count]) => (
-            <li key={keyword} className="text-lg">
-              {keyword}: {count}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <h3 className="text-2xl font-semibold">Bearish Mentions</h3>
-        <ul className="list-disc pl-5">
-          {Object.entries(data.bearish).map(([keyword, count]) => (
-            <li key={keyword} className="text-lg">
-              {keyword}: {count}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-};
+            {/* 🔹 Show a Button to Open Google Trends in a New Tab */}
+            <a
+                href="https://trends.google.com/trends/explore?date=today%203-m&q=bitcoin&hl=ko"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition"
+            >
+                📈 View Google Trends Chart
+            </a>
+        </div>
+    );
+}
 
 export default ContrarianIndicator;
