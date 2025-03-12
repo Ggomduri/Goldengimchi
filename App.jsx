@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import ContrarianIndicator from './ContrarianIndicator';
-import Navbar from './Navbar';  // <-- This was explicitly missing and must be added clearly
+import ContrarianIndicator from './pages/ContrarianIndicator';
+import Navbar from './components/Navbar';  // <-- This was explicitly missing and must be added clearly
 
 // ScrollToTop: Ensures the page scrolls to the top when navigating
 const ScrollToTop = () => {
