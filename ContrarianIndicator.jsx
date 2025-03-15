@@ -1,21 +1,13 @@
-import React from "react";
+import React from 'react';
+import GoogleTrendsEmbed from '../components/GoogleTrendsEmbed';
 
-function ContrarianIndicator() {
-    return (
-        <div className="flex flex-col min-h-screen bg-gray-100 items-center justify-center">
-            <h2 className="text-2xl font-bold mb-4 text-center">Bitcoin Google Search Trends</h2>
-
-            {/* 🔹 Show a Button to Open Google Trends in a New Tab */}
-            <a
-                href="https://trends.google.com/trends/explore?date=today%203-m&q=bitcoin&hl=ko"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition"
-            >
-                📈 View Google Trends Chart
-            </a>
-        </div>
-    );
-}
+const ContrarianIndicator = () => {
+  return (
+    <div className="max-w-4xl mx-auto py-16 px-4">
+      <h2 className="text-3xl font-bold mb-4 text-center">Market Indicator</h2>
+      <GoogleTrendsEmbed />
+    </div>
+  );
+};
 
 export default ContrarianIndicator;

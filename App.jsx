@@ -67,7 +67,7 @@ const Home = () => {
     }
   }, [isLoggedIn]);
 
-  const coinOrder = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'DOGEUSDT'];
+  const coinOrder = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'DOGEUSDT', 'XRPUSDT'];
 
   const handleFavoriteClick = (symbol) => {
     if (!isLoggedIn) {
